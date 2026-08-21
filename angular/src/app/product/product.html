@@ -1,0 +1,45 @@
+<div style="padding: 20px; font-family: Arial, sans-serif;">
+  <h2>Gerenciamento de Produtos (CRUD)</h2>
+
+  <!-- Formulário -->
+  <fieldset style="margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px;">
+    <legend><strong>{{ productBeingEdited ? 'Editar Produto' : 'Adicionar Novo Produto' }}</strong></legend>
+
+    <div style="margin-bottom: 10px;">
+      <input [(ngModel)]="nomeInput" placeholder="Nome do produto" style="padding: 5px; margin-right: 5px;" />
+      <input [(ngModel)]="precoInput" type="number" placeholder="Preço" style="padding: 5px; margin-right: 5px; width: 80px;" />
+      <input [(ngModel)]="quantidadeInput" type="number" placeholder="Qtd" style="padding: 5px; margin-right: 5px; width: 60px;" />
+
+      <button (click)="save()" style="padding: 5px 10px;">Salvar</button>
+      <button *ngIf="productBeingEdited" (click)="clearForm()" style="padding: 5px 10px; margin-left: 5px;">Cancelar</button>
+    </div>
+  </fieldset>
+
+  <!-- Tabela -->
+  <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%; border: 1px solid #ddd;">
+    <thead style="background-color: #f2f2f2;">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Estoque</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prod of productList">
+        <td>{{ prod.id }}</td>
+        <td>{{ prod.nome }}</td>
+        <td>R$ {{ prod.preco }}</td>
+        <td>{{ prod.quantidade }} un</td>
+        <td>
+          <button (click)="edit(prod)" style="margin-right: 5px; cursor: pointer;">Editar</button>
+          <button (click)="delete(prod.id)" style="cursor: pointer; color: red;">Excluir</button>
+        </td>
+      </tr>
+      <tr *ngIf="productList.length === 0">
+        <td colspan="5" style="text-align: center; color: #666;">Nenhum produto em estoque.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
