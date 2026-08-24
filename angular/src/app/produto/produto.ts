@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 
 // 1. Importe os módulos do Angular Material que vai usar
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ModelProduto } from  './produto.model'
+import { HttpClient } from '@angular/common/http';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
  imports: [
     CommonModule,
@@ -28,26 +30,58 @@ import { ModelProduto } from  './produto.model'
 
 
 export class Produto {
+  private apiUrl = 'http://localhost:3000/product';
   nome:string = '';
   preco:number = 0;
   descricao:string = '';
   marca:string = 'sdf';
-
-  productList: ModelProduto[] = [
-    { id: 1, nome: 'Teclado Mecânico', preco: 250, descricao: 'RGB Switch Blue',marca: 'asd' },
-    { id: 2, nome: 'Mouse Gamer', preco: 120, descricao: 'DPI regulável', marca: 'asd'}
-  ];
+  desc: string = '';
+  productList = new MatTableDataSource<ModelProduto>([]);
   displayedColumns: string[] = ['id', 'nome', 'preco', 'descricao','actions'];
+  constructor(private http: HttpClient){
+
+  }
+
+  ngOnInit() {
+
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.http.get<ModelProduto[]>(this.apiUrl).subscribe({
+      next: (produtos) => {
+        this.productList.data = produtos
+        this.desc = this.productList.data[0].descricao
+      },
+      error:(erro: any) => {
+
+      }
+
+    })
+  }
+
   store(){
     const novoProduto: ModelProduto = {
       nome: this.nome,
       preco: this.preco,
       descricao: this.descricao,
-      marca: this.marca,
     };
+    this.http.post<ModelProduto>(this.apiUrl,novoProduto).subscribe({
+      next: (produto: ModelProduto) => {
+
+        this.productList.data = [...this.productList.data,produto]
+
+      },
+      error:(erro: any) => {
+
+      }
+
+    })
+
+
 
     // Adiciona o novo produto ao array (reproduzindo uma mudança imutável para atualizar a tabela)
-    this.productList = [...this.productList, novoProduto];
+    // this.productList = novoProduto;
     console.log(this.productList)
 
   }

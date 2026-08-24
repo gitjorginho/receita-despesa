@@ -3,5 +3,5 @@ export interface ModelProduto {
   nome: string;
   preco: number;
   descricao: string;
-  marca: string;
+  createAt?: string;
 }

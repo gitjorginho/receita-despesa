@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsString, Length,IsNumber } from 'class-validator';
 export class CreateProductDto {
   
   @IsString({ message: 'O nome deve ser um texto válido.' })
@@ -7,6 +7,7 @@ export class CreateProductDto {
   nome!: string;
   
   @IsNotEmpty({ message: 'O preço do produto é obrigatório.' })
+  @IsNumber({},{ message: 'O preço deve ser um número válido.' })
   preco!: number;
   
   @IsString({ message: 'A descrição deve ser um texto válido.' })
