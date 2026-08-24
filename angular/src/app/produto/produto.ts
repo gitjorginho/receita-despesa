@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ModelProduto } from  './produto.model'
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
  imports: [
     CommonModule,
@@ -21,7 +22,8 @@ import { MatTableDataSource } from '@angular/material/table';
     MatFabButton,
     MatButton,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
   ],
   selector: 'app-produto',
   styleUrl: './produto.css',
@@ -38,6 +40,7 @@ export class Produto {
   desc: string = '';
   productList = new MatTableDataSource<ModelProduto>([]);
   displayedColumns: string[] = ['id', 'nome', 'preco', 'descricao','actions'];
+  loading: Boolean = false;
   constructor(private http: HttpClient){
 
   }
@@ -48,13 +51,19 @@ export class Produto {
   }
 
   loadProducts() {
+    this.loading = true
     this.http.get<ModelProduto[]>(this.apiUrl).subscribe({
       next: (produtos) => {
+
         this.productList.data = produtos
         this.desc = this.productList.data[0].descricao
+
       },
       error:(erro: any) => {
 
+      },
+      complete:()=>{
+        this.loading = false
       }
 
     })
@@ -66,16 +75,16 @@ export class Produto {
       preco: this.preco,
       descricao: this.descricao,
     };
+    this.loading = true
     this.http.post<ModelProduto>(this.apiUrl,novoProduto).subscribe({
       next: (produto: ModelProduto) => {
-
         this.productList.data = [...this.productList.data,produto]
-
       },
       error:(erro: any) => {
-
+      },
+      complete:()=>{
+        this.loading = false
       }
-
     })
 
 
@@ -89,7 +98,21 @@ export class Produto {
     console.log(product)
   }
   delete(prod :ModelProduto){
-    console.log('apagar')
+
+    let route: string = `${this.apiUrl}/${prod.id}`
+
+    this.http.delete<ModelProduto>(route).subscribe({
+      next: () => {
+        this.productList.data = this.productList.data.filter((p) => p.id !== prod.id);
+        
+      },
+      error:(erro: any) => {
+
+      },
+      complete:()=>{
+        this.loading = false
+      }
+    })
   }
 
 }

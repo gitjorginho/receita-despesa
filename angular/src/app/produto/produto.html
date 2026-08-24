@@ -20,6 +20,13 @@
 <div>
   <h1>{{desc}}</h1>
 </div>
+<!-- 1. BLOCO DO LOADING (Insira logo acima da tabela) -->
+@if (loading) {
+  <div style="display: flex; justify-content: center; align-items: center; padding: 30px;">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span style="margin-left: 10px; color: #666;">Carregando produtos...</span>
+  </div>
+}
  <table mat-table [dataSource]="productList" style="width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 8px;">
 
     <!-- Coluna ID -->
