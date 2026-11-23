@@ -1,1 +1,35 @@
-<router-outlet />
+<div class="mobile-shell">
+  <!-- Toolbar M3 -->
+  <mat-toolbar class="app-toolbar">
+    <div class="toolbar-text">
+      <span class="title">Extrato</span>
+      <span class="subtitle">Visão competência</span>
+    </div>
+    <span class="spacer"></span>
+    <button mat-icon-button aria-label="Calendário">
+      <mat-icon>calendar_today</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <!-- Área Central Rolável -->
+  <main class="app-content">
+    <router-outlet />
+  </main>
+
+  <!-- Rodapé Fixo M3 com 2 Abas (Receitas e Despesas) -->
+  <nav class="bottom-nav" aria-label="Navegação principal">
+    <a matRipple routerLink="/receita" routerLinkActive="active-receita" class="nav-item">
+      <div class="nav-pill">
+        <mat-icon>trending_up</mat-icon>
+      </div>
+      <span>Receitas</span>
+    </a>
+
+    <a matRipple routerLink="/despesa" routerLinkActive="active-despesa" class="nav-item">
+      <div class="nav-pill">
+        <mat-icon>trending_down</mat-icon>
+      </div>
+      <span>Despesas</span>
+    </a>
+  </nav>
+</div>

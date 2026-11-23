@@ -1,0 +1,111 @@
+.full-width {
+  width: 100%;
+}
+
+.search-field {
+  margin-bottom: 16px;
+  --mat-form-field-outlined-container-shape: 28px;
+}
+
+.summary-card,
+.form-card,
+.list-card {
+  --mat-card-outlined-container-shape: 16px;
+  --mat-card-outlined-container-color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.summary-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.summary-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #e6f5ef;
+  color: #00995d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #00995d;
+}
+
+.summary-label {
+  font-size: 13px;
+  color: var(--mat-sys-on-surface-variant, #666);
+}
+
+.receita-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Tokens do botão preenchido (mat-flat-button) no Material 22 */
+.btn-add {
+  --mat-button-filled-container-color: #00995d;
+  --mat-button-filled-label-text-color: #ffffff;
+  --mat-button-filled-container-shape: 12px;
+  height: 44px;
+  width: 100%;
+}
+
+.avatar-circle {
+  background-color: #00995d;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-title {
+  font-weight: 500;
+}
+
+.item-subtitle {
+  font-size: 12px;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.valor-positivo {
+  font-weight: 600;
+  color: #00995d;
+  font-size: 14px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--mat-sys-on-surface-variant, #9e9e9e);
+}
+
+.empty-state mat-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+}

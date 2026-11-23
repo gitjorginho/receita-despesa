@@ -1,1 +1,80 @@
-<p>receita works!</p>
+<!-- Campo de Busca M3 -->
+<mat-form-field appearance="outline" subscriptSizing="dynamic" class="full-width search-field">
+  <mat-label>Buscar transação</mat-label>
+  <input matInput [ngModel]="termoBusca()" (ngModelChange)="termoBusca.set($event)" placeholder="Ex: Salário..." />
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+
+<!-- Card de Resumo ("Ganhos do mês") -->
+<mat-card appearance="outlined" class="summary-card">
+  <mat-card-content class="summary-content">
+    <div class="summary-icon">
+      <mat-icon>trending_up</mat-icon>
+    </div>
+    <div class="summary-info">
+      <span class="summary-value">{{ totalReceitas() | currency:'BRL' }}</span>
+      <span class="summary-label">Ganhos do mês</span>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Card de Cadastro Rápido -->
+<mat-card appearance="outlined" class="form-card">
+  <mat-card-content>
+    <form (ngSubmit)="adicionar()" class="receita-form">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="full-width">
+        <mat-label>Descrição</mat-label>
+        <input matInput [(ngModel)]="novaReceita.descricao" name="descricao" required />
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Valor (R$)</mat-label>
+          <input matInput type="number" [(ngModel)]="novaReceita.valor" name="valor" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Categoria</mat-label>
+          <input matInput [(ngModel)]="novaReceita.categoria" name="categoria" />
+        </mat-form-field>
+      </div>
+
+      <button mat-flat-button class="btn-add" type="submit">
+        <mat-icon>add</mat-icon>
+        Adicionar Receita
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<!-- Lista de Transações M3 -->
+<mat-card appearance="outlined" class="list-card">
+  <mat-list>
+    @for (item of receitasFiltradas(); track item.id; let last = $last) {
+      <mat-list-item>
+        <div matListItemAvatar class="avatar-circle">
+          <mat-icon>attach_money</mat-icon>
+        </div>
+
+        <div matListItemTitle class="item-title">{{ item.descricao }}</div>
+        <div matListItemLine class="item-subtitle">{{ item.categoria || 'Salário | Ganho' }}</div>
+
+        <div matListItemMeta class="item-actions">
+          <span class="valor-positivo">{{ item.valor | currency:'BRL' }}</span>
+          <button mat-icon-button (click)="remover(item.id)" aria-label="Excluir">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+
+      @if (!last) {
+        <mat-divider />
+      }
+    } @empty {
+      <div class="empty-state">
+        <mat-icon>receipt_long</mat-icon>
+        <p>Nenhuma receita encontrada</p>
+      </div>
+    }
+  </mat-list>
+</mat-card>
